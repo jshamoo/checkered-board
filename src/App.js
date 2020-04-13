@@ -20,9 +20,9 @@ class App extends React.Component {
     for (let i = 0; i < n; i++) {
       let row = [];
       for (let j = 0; j < n; j++) {
-        row.push(<div className="cube"></div>);
+        row.push(<div className="cube" key={i+j}></div>);
       }
-    board.push(<div className="row">{row}</div>);
+    board.push(<div className="row" key={i}>{row}</div>);
     }
     return board;
   }
