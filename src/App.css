@@ -1,3 +1,9 @@
+:root {
+  --blackPieceColor: black;
+  --redPieceColor: red;
+  --shape: 50%;
+}
+
 .root {
   margin: 0;
   padding: 0;
@@ -34,13 +40,13 @@
 .red-piece {
   height: 25px;
   width: 25px;
-  border-radius: 50%;
-  border: 5px solid red;
+  border-radius: var(--shape);
+  border: 5px solid var(--redPieceColor);
 }
 
 .black-piece {
   height: 25px;
   width: 25px;
-  border-radius: 50%;
-  border: 5px solid black;
+  border-radius: var(--shape);
+  border: 5px solid var(--blackPieceColor);
 }

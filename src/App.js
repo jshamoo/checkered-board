@@ -1,6 +1,6 @@
 import React from 'react';
 import Input from './components/Input';
-
+import ControlPanel from './components/ControlPanel';
 import './App.css';
 
 class App extends React.Component {
@@ -41,6 +41,7 @@ class App extends React.Component {
         <div className="board">
           {this.createBoard()}
         </div>
+        <ControlPanel />
       </div>
     )
   }
