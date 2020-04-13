@@ -6,10 +6,14 @@ import './App.css';
 class App extends React.Component {
   constructor() {
     super();
-    this.state = {size: 8}
+    this.state = {
+      size: 8,
+      piecePosition: null,
+    }
     this.updateSize = this.updateSize.bind(this);
     this.highlightPiece = this.highlightPiece.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handlePieceClick = this.handlePieceClick.bind(this);
     this.createBoard = this.createBoard.bind(this);
   }
 
@@ -18,6 +22,18 @@ class App extends React.Component {
   }
 
   handleClick(e) {
+    if (e.target.className.includes('piece')) {
+      this.setState({ piecePosition: e.target.dataset.pos})
+      this.handlePieceClick(e);
+    } else if (e.target.id === 'suggestA' || e.target.id === 'suggestB') {
+      let newPosition = e.target.dataset.pos;
+      this.handleMove(newPosition, this.state.piecePosition);
+    } else {
+      return;
+    }
+  }
+
+  handlePieceClick(e) {
     console.log(e.target)
     const piece = e.target;
     this.highlightPiece(piece);
@@ -66,18 +82,35 @@ class App extends React.Component {
     if (potentialPositionA !== null) {
       let potentialCubeA = document.querySelector(`.cube[data-pos='${potentialPositionA}']`);
       // had to use id to get a higher specificity in css (not recommended)
-      potentialCubeA.id = 'suggest';
+      potentialCubeA.id = 'suggestA';
       console.log(potentialCubeA);
     }
     if (potentialPositionB !== null) {
       let potentialCubeB = document.querySelector(`.cube[data-pos='${potentialPositionB}']`);
-      potentialCubeB.id = 'suggest';
+      potentialCubeB.id = 'suggestB';
       console.log(potentialCubeB);
     }
   }
 
-  handleMove(e) {
-
+  handleMove(newPosition, piecePosition) {
+    const parentNode = document.querySelector(`.cube[data-pos='${piecePosition}']`);
+    console.log('parentNode', parentNode)
+    const childNode = document.querySelector(`.piece[data-pos='${piecePosition}']`);
+    console.log('newPosition', newPosition)
+    const newParentNode = document.querySelector(`.cube[data-pos='${newPosition}']`);
+    console.log('newParentNode', typeof newParentNode)
+    parentNode.removeChild(childNode);
+    if (childNode.className.includes('red-piece')) {
+      let newChild = document.createElement('div');
+      newChild.classList.add('red-piece', 'piece');
+      newChild.setAttribute('data-pos', newPosition);
+      newParentNode.appendChild(newChild)
+    } else {
+      let newChild = document.createElement('div');
+      newChild.classList.add('black-piece', 'piece');
+      newChild.setAttribute('data-pos', newPosition);
+      newParentNode.appendChild(newChild)
+    }
   }
 
   highlightPiece(piece) {
