@@ -3,7 +3,7 @@ import React from 'react';
 class ControlPanel extends React.Component {
 
   handleChange(e) {
-    console.log(e.target.name, e.target.value)
+    // console.log(e.target.name, e.target.value)
     if (e.target.name === 'redPieceColor' || e.target.name === 'blackPieceColor') {
       document.documentElement.style.setProperty(`--${e.target.name}`, `${e.target.value}`)
     } else {
