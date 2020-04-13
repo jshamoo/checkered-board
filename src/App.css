@@ -1,3 +1,7 @@
+.root {
+  margin: 0;
+  padding: 0;
+}
 
 .row {
   display: flex;
@@ -6,10 +10,13 @@
 .cube {
   height: 50px;
   width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .row:nth-of-type(odd) .cube:nth-of-type(odd) {
-  background-color: black;
+  background-color: gray;
 }
 
 .row:nth-of-type(odd) .cube:nth-of-type(even) {
@@ -17,9 +24,23 @@
 }
 
 .row:nth-of-type(even) .cube:nth-of-type(even) {
-  background-color: black;
+  background-color: grey;
 }
 
 .row:nth-of-type(even) .cube:nth-of-type(odd) {
   background-color: white;
+}
+
+.red-piece {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  border: 5px solid red;
+}
+
+.black-piece {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  border: 5px solid black;
 }
