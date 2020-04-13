@@ -41,12 +41,12 @@
   height: 25px;
   width: 25px;
   border-radius: var(--shape);
-  border: 5px solid var(--redPieceColor);
+  background-color: var(--redPieceColor);
 }
 
 .black-piece {
   height: 25px;
   width: 25px;
   border-radius: var(--shape);
-  border: 5px solid var(--blackPieceColor);
+  background-color: var(--blackPieceColor);
 }
