@@ -29,11 +29,11 @@ class App extends React.Component {
       let row = [];
       for (let j = 0; j < n; j++) {
         if (i === 0 || i === 1) {
-          row.push(<div className="cube" key={i + j}><div className="red-piece piece"></div></div>);
+          row.push(<div className="cube" data-pos={i.toString() + j.toString()} key={i + j}><div className="red-piece piece"></div></div>);
         } else if (i === n - 1 || i === n - 2){
-          row.push(<div className="cube" key={i + j}><div className="black-piece piece"></div></div>);
+          row.push(<div className="cube" data-pos={i.toString() + j.toString()} key={i + j}><div className="black-piece piece"></div></div>);
         } else {
-          row.push(<div className="cube" key={i + j}></div>);
+          row.push(<div className="cube" data-pos={i.toString() + j.toString()} key={i + j}></div>);
         }
 
       }
