@@ -20,7 +20,14 @@ class App extends React.Component {
     for (let i = 0; i < n; i++) {
       let row = [];
       for (let j = 0; j < n; j++) {
-        row.push(<div className="cube" key={i+j}></div>);
+        if (i === 0 || i === 1) {
+          row.push(<div className="cube" key={i + j}><div className="red-piece"></div></div>);
+        } else if (i === n - 1 || i === n - 2){
+          row.push(<div className="cube" key={i + j}><div className="black-piece"></div></div>);
+        } else {
+          row.push(<div className="cube" key={i + j}></div>);
+        }
+
       }
     board.push(<div className="row" key={i}>{row}</div>);
     }
