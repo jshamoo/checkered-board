@@ -14,6 +14,14 @@ class App extends React.Component {
     this.setState({size: n})
   }
 
+  handleClick(e) {
+    console.log(e.target.className)
+    const piece = e.target;
+    if (!piece.className.includes('piece')) return;
+    piece.classList.add('active')
+  }
+
+
   createBoard() {
     let board = [];
     let n = this.state.size;
@@ -21,9 +29,9 @@ class App extends React.Component {
       let row = [];
       for (let j = 0; j < n; j++) {
         if (i === 0 || i === 1) {
-          row.push(<div className="cube" key={i + j}><div className="red-piece"></div></div>);
+          row.push(<div className="cube" key={i + j}><div className="red-piece piece"></div></div>);
         } else if (i === n - 1 || i === n - 2){
-          row.push(<div className="cube" key={i + j}><div className="black-piece"></div></div>);
+          row.push(<div className="cube" key={i + j}><div className="black-piece piece"></div></div>);
         } else {
           row.push(<div className="cube" key={i + j}></div>);
         }
@@ -38,7 +46,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Input updateSize={this.updateSize}/>
-        <div className="board">
+        <div className="board" onClick={e => this.handleClick(e)}>
           {this.createBoard()}
         </div>
         <ControlPanel />
