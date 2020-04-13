@@ -1,0 +1,26 @@
+
+
+.row {
+  display: flex;
+}
+
+.cube {
+  height: 30px;
+  width: 30px;
+}
+
+.row:nth-of-type(odd) .cube:nth-of-type(odd) {
+  background-color: black;
+}
+
+.row:nth-of-type(odd) .cube:nth-of-type(even) {
+  background-color: white;
+}
+
+.row:nth-of-type(even) .cube:nth-of-type(even) {
+  background-color: black;
+}
+
+.row:nth-of-type(even) .cube:nth-of-type(odd) {
+  background-color: white;
+}
