@@ -46,27 +46,60 @@ class App extends React.Component {
     console.log(target);
     if (target.className.includes('piece')) {
       // highlight the piece
-      this.highlight(target);
+      this.highlightPiece(target);
       // find and highlight the potential moves
-      let currentPosition = target.dataset.pos;
-      this.findNextPosition(currentPosition);
+      const currentPosition = target.dataset.pos;
+      const rowIndex = Number(currentPosition[0]);
+      const colIndex = Number(currentPosition[1]);
 
+      this.findNextPosition(rowIndex, colIndex);
     }
 
     // if a potential spot is clicked
 
   }
 
-  highlight(target) {
+  highlightPiece(target) {
     target.style.border = "3px solid yellow";
   }
 
-  findNextPosition(pos) {
+  findNextPosition(row, col) {
+    const board = this.state.board.slice();
+    // if it is a red piece
+    if (board[row][col] === 'r') {
+      if (row + 1 < board.length && // row in bound
+          col + 1 < board.length && // col in bound
+          board[row + 1][col + 1] === 0) { // it is an empty
+        board[row + 1][col + 1] = 1;
+      }
+      if (row + 1 < board.length &&
+          col - 1 >= 0 &&
+          board[row + 1][col - 1] === 0) {
+        board[row + 1][col - 1] = 1;
+      }
+    }
+    // if it is a black piece
+    if (board[row][col] === 'b') {
+      if (row - 1 >= 0 && // row in bound
+        col + 1 < board.length && // col in bound
+        board[row - 1][col + 1] === 0) { // it is an empty
+        board[row - 1][col + 1] = 1;
+      }
+      if (row - 1 >= 0 &&
+        col - 1 >= 0 &&
+        board[row - 1][col - 1] === 0) {
+        board[row - 1][col - 1] = 1;
+      }
+    }
 
+    this.setState({ board });
   }
 
 
   render() {
+    const highlightCubeStyle = {
+      backgroundColor: 'lightblue'
+    }
     return (
       <div className="App">
         <Input updateSize={this.updateSize}/>
@@ -83,7 +116,8 @@ class App extends React.Component {
                     <div key={j} className="cube">
                       <Piece color="black" position={i.toString() + j.toString()} />
                     </div>);
-                  return (<div key={j} className="cube"></div>);
+                  if (cube === 0) return (<div key={j} className="cube"></div>);
+                  if (cube === 1) return (<div key={j} className="cube" style={highlightCubeStyle}></div>)
                 })}
               </div>
             )
