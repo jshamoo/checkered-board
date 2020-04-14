@@ -12,10 +12,7 @@ class App extends React.Component {
       lastPieceMoved: null,
     }
     this.updateSize = this.updateSize.bind(this);
-    this.highlightPiece = this.highlightPiece.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.handlePieceClick = this.handlePieceClick.bind(this);
-    this.createBoard = this.createBoard.bind(this);
+
   }
 
   updateSize(n) {
@@ -95,7 +92,6 @@ class App extends React.Component {
     const childNode = document.querySelector(`.piece[data-pos='${piecePosition}']`);
     const newParentNode = document.querySelector(`.cube[data-pos='${newPosition}']`);
 
-    console.log(childNode, this.state.lastPieceMoved);
     if (childNode.className.includes('red-piece') && this.state.lastPieceMoved === 'red') return;
     if (childNode.className.includes('black-piece') && this.state.lastPieceMoved === 'black') return;
 
