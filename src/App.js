@@ -44,8 +44,8 @@ class App extends React.Component {
   }
 
   handleClick(target) {
-    console.log(target);
-    // find and highlight the potential moves
+    // console.log(target);
+
     const currentPosition = target.dataset.pos;
     const rowIndex = Number(currentPosition[0]);
     const colIndex = Number(currentPosition[1]);
@@ -104,7 +104,6 @@ class App extends React.Component {
       if (row + 1 < board.length && // row in bound
           col + 1 < board.length && // col in bound
           board[row + 1][col + 1] === 0) { // it is an empty
-        // board[row + 1][col + 1] = 1;
         this.setState(state => {
           state.board[row + 1][col + 1] = 1;
           return state;
@@ -113,7 +112,6 @@ class App extends React.Component {
       if (row + 1 < board.length &&
           col - 1 >= 0 &&
           board[row + 1][col - 1] === 0) {
-        // board[row + 1][col - 1] = 1;
         this.setState(state => {
           state.board[row + 1][col - 1] = 1;
           return state;
@@ -125,7 +123,6 @@ class App extends React.Component {
       if (row - 1 >= 0 && // row in bound
         col + 1 < board.length && // col in bound
         board[row - 1][col + 1] === 0) { // it is an empty
-        // board[row - 1][col + 1] = 1;
         this.setState(state => {
           state.board[row - 1][col + 1] = 1;
           return state;
@@ -134,7 +131,6 @@ class App extends React.Component {
       if (row - 1 >= 0 &&
         col - 1 >= 0 &&
         board[row - 1][col - 1] === 0) {
-        // board[row - 1][col - 1] = 1;
         this.setState(state => {
           state.board[row - 1][col - 1] = 1;
           return state;
