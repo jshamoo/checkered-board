@@ -1,6 +1,5 @@
 import React from 'react';
 import Input from './components/Input';
-import Piece from './components/Piece';
 import ControlPanel from './components/ControlPanel';
 
 import './App.css';
@@ -91,7 +90,11 @@ class App extends React.Component {
   }
 
   highlightPiece(target) {
-    target.style.border = "3px solid yellow";
+    target.classList.add('active');
+  }
+
+  removeTransition(target) {
+    target.classList.remove('active');
   }
 
   findNextPosition(row, col) {
@@ -171,7 +174,10 @@ class App extends React.Component {
     return (
       <div className="App">
         <Input updateSize={this.updateSize}/>
-        <div className="board" onClick={e => this.handleClick(e.target)}>
+        <div className="board"
+          onClick={e => this.handleClick(e.target)}
+          onTransitionEnd={e => this.removeTransition(e.target)}
+        >
           {this.state.board.map((row, i) => {
             return (
               <div className="row" key={i}>
@@ -179,17 +185,19 @@ class App extends React.Component {
                   const pos = i.toString() + j.toString();
                   if (cube === 'r') return (
                     <div key={j} className="cube" data-pos={pos} >
-                      <Piece color="red" position={pos} />
+                      <div className="red piece" data-pos={pos}></div>
                     </div>);
                   if (cube === 'b') return (
                     <div key={j} className="cube" data-pos={pos} >
-                      <Piece color="black" position={pos} />
+                      <div className="black piece" data-pos={pos}></div>
                     </div>);
                   if (cube === 0) return (
                     <div key={j} className="cube empty" data-pos={pos}>
                     </div>);
                   if (cube === 1) return (
-                    <div key={j} className="cube highlight" data-pos={pos} style={highlightCubeStyle}>
+                    <div key={j} className="cube highlight" data-pos={pos}
+                      style={highlightCubeStyle}
+                    >
                   </div>)
                 })}
               </div>
