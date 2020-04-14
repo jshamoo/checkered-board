@@ -54,12 +54,15 @@
 
 .active {
   border: 3px solid yellow;
+  transition: border 0.1s ease-in-out;
 }
 
 #suggestA {
   background-color: lightblue;
+  transition: backgroun-color 0.1s ease;
 }
 
 #suggestB {
   background-color: lightblue;
+  transition: backgroun-color 0.1s ease;
 }

@@ -9,6 +9,7 @@ class App extends React.Component {
     this.state = {
       size: 8,
       piecePosition: null,
+      lastPieceMoved: null,
     }
     this.updateSize = this.updateSize.bind(this);
     this.highlightPiece = this.highlightPiece.bind(this);
@@ -28,18 +29,18 @@ class App extends React.Component {
     } else if (e.target.id === 'suggestA' || e.target.id === 'suggestB') {
       let newPosition = e.target.dataset.pos;
       this.handleMove(newPosition, this.state.piecePosition);
+      document.querySelector('#suggestA').removeAttribute('id');
+      document.querySelector('#suggestB').removeAttribute('id');
     } else {
       return;
     }
   }
 
   handlePieceClick(e) {
-    console.log(e.target)
     const piece = e.target;
     this.highlightPiece(piece);
 
     const currentPosition = piece.dataset.pos;
-    console.log(currentPosition);
 
     let pieceMoveDirection;
     if (piece.className.includes("red-piece")) {
@@ -55,7 +56,7 @@ class App extends React.Component {
     // parse current position
     const curRow = Number(currentPosition[0]);
     const curCol = Number(currentPosition[1]);
-    console.log('row:', curRow, 'col:', curCol)
+
     // get the two potential positions
     let potentialPositionA = null;
     let potentialPositionB = null;
@@ -66,7 +67,6 @@ class App extends React.Component {
     if (newRow >= 0 && newRow < this.state.size && curCol - 1 >= 0) {
       potentialPositionB = (curRow + direction).toString() + (curCol - 1).toString();
     }
-    console.log('1',potentialPositionA, potentialPositionB);
 
     // check if there is a piece
     const pieces = document.querySelectorAll('.piece');
@@ -78,44 +78,52 @@ class App extends React.Component {
         potentialPositionB = null;
       }
     }
-    console.log('2',potentialPositionA, potentialPositionB)
+
     if (potentialPositionA !== null) {
       let potentialCubeA = document.querySelector(`.cube[data-pos='${potentialPositionA}']`);
       // had to use id to get a higher specificity in css (not recommended)
       potentialCubeA.id = 'suggestA';
-      console.log(potentialCubeA);
     }
     if (potentialPositionB !== null) {
       let potentialCubeB = document.querySelector(`.cube[data-pos='${potentialPositionB}']`);
       potentialCubeB.id = 'suggestB';
-      console.log(potentialCubeB);
     }
   }
 
   handleMove(newPosition, piecePosition) {
     const parentNode = document.querySelector(`.cube[data-pos='${piecePosition}']`);
-    console.log('parentNode', parentNode)
     const childNode = document.querySelector(`.piece[data-pos='${piecePosition}']`);
-    console.log('newPosition', newPosition)
     const newParentNode = document.querySelector(`.cube[data-pos='${newPosition}']`);
-    console.log('newParentNode', typeof newParentNode)
-    parentNode.removeChild(childNode);
+
+    console.log(childNode, this.state.lastPieceMoved);
+    if (childNode.className.includes('red-piece') && this.state.lastPieceMoved === 'red') return;
+    if (childNode.className.includes('black-piece') && this.state.lastPieceMoved === 'black') return;
+
     if (childNode.className.includes('red-piece')) {
+      parentNode.removeChild(childNode);
       let newChild = document.createElement('div');
       newChild.classList.add('red-piece', 'piece');
       newChild.setAttribute('data-pos', newPosition);
       newParentNode.appendChild(newChild)
-    } else {
+      this.setState({lastPieceMoved: 'red'})
+    }
+    if (childNode.className.includes('black-piece')){
+      parentNode.removeChild(childNode);
       let newChild = document.createElement('div');
       newChild.classList.add('black-piece', 'piece');
       newChild.setAttribute('data-pos', newPosition);
       newParentNode.appendChild(newChild)
+      this.setState({ lastPieceMoved: 'black' })
     }
   }
 
   highlightPiece(piece) {
     if (!piece.className.includes('piece')) return;
     piece.classList.add('active')
+  }
+
+  removeTransition(e) {
+    e.target.classList.remove('active');
   }
 
 
@@ -128,16 +136,20 @@ class App extends React.Component {
         let pos = i.toString() + j.toString();
         if (i === 0 || i === 1) {
           row.push(
-          <div className="cube" data-pos={pos} key={i + j}>
-            <div className="red-piece piece" data-pos={pos}></div>
+            <div className="cube"
+              data-pos={pos} key={i + j}
+            >
+              <div className="red-piece piece"
+                data-pos={pos}
+              ></div>
           </div>);
         } else if (i === n - 1 || i === n - 2){
           row.push(
           <div className="cube" data-pos={pos} key={i + j}>
-            <div className="black-piece piece" data-pos={pos}></div>
+              <div className="black-piece piece" data-pos={pos}></div>
           </div>);
         } else {
-          row.push(<div className="cube" data-pos={pos} key={i + j}></div>);
+          row.push(<div className="cube" data-pos={pos} key={i + j} ></div>);
         }
 
       }
@@ -150,7 +162,10 @@ class App extends React.Component {
     return (
       <div className="App">
         <Input updateSize={this.updateSize}/>
-        <div className="board" onClick={e => this.handleClick(e)}>
+        <div className="board"
+          onClick={e => this.handleClick(e)}
+          onTransitionEnd={e => this.removeTransition(e)}
+        >
           {this.createBoard()}
         </div>
         <ControlPanel />
