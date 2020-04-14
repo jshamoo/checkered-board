@@ -1,6 +1,8 @@
 import React from 'react';
 import Input from './components/Input';
+import Piece from './components/Piece';
 import ControlPanel from './components/ControlPanel';
+
 import './App.css';
 
 class App extends React.Component {
@@ -16,10 +18,9 @@ class App extends React.Component {
         [0, 0, 0, 0, 0, 0, 0, 0],
         ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'],
         ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'],
-      ],
+      ]
     }
     this.updateSize = this.updateSize.bind(this);
-
   }
 
   updateSize(n) {
@@ -40,23 +41,54 @@ class App extends React.Component {
     this.setState({ board })
   }
 
+  handleClick(target) {
+    // if a piece is clicked
+    console.log(target);
+    if (target.className.includes('piece')) {
+      // highlight the piece
+      this.highlight(target);
+      // find and highlight the potential moves
+      let currentPosition = target.dataset.pos;
+      this.findNextPosition(currentPosition);
+
+    }
+
+    // if a potential spot is clicked
+
+  }
+
+  highlight(target) {
+    target.style.border = "3px solid yellow";
+  }
+
+  findNextPosition(pos) {
+
+  }
+
+
   render() {
-    let redPiece = (<div className="red piece"></div>);
-    let blackPiece = (<div className="black piece"></div>);
     return (
       <div className="App">
         <Input updateSize={this.updateSize}/>
-        {this.state.board.map((row, index) => {
-          return (
-            <div className="row" key={index}>
-              {row.map((cube, index) => {
-                if (cube === 'r') return (<div key={index} className="cube">{redPiece}</div>);
-              if (cube === 'b') return (<div key={index} className="cube">{blackPiece}</div>);
-                if (cube === 0) return (<div key={index} className="cube"></div>);
-              })}
-            </div>
-          )
-        })}
+        <div className="board" onClick={e => this.handleClick(e.target)}>
+          {this.state.board.map((row, i) => {
+            return (
+              <div className="row" key={i}>
+                {row.map((cube, j) => {
+                  if (cube === 'r') return (
+                    <div key={j} className="cube">
+                      <Piece color="red" position={i.toString() + j.toString()} />
+                    </div>);
+                  if (cube === 'b') return (
+                    <div key={j} className="cube">
+                      <Piece color="black" position={i.toString() + j.toString()} />
+                    </div>);
+                  return (<div key={j} className="cube"></div>);
+                })}
+              </div>
+            )
+          })}
+        </div>
         <ControlPanel />
       </div>
     )
