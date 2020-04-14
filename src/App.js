@@ -23,6 +23,7 @@ class App extends React.Component {
 
     }
     this.updateSize = this.updateSize.bind(this);
+    this.reset = this.reset.bind(this);
   }
 
   updateSize(n) {
@@ -162,6 +163,17 @@ class App extends React.Component {
     })
   }
 
+  save() {
+
+  }
+
+  reset() {
+    this.updateSize(8);
+    this.setState({
+      targetPiece: null,
+      lastMovedPiece: null,
+    })
+  }
 
   render() {
     const highlightCubeStyle = {
@@ -170,6 +182,8 @@ class App extends React.Component {
     return (
       <div className="App">
         <Input updateSize={this.updateSize}/>
+        <button onClick={this.save}>Save Game</button>
+        <button onClick={this.reset}>Reset Game</button>
         <div className="board"
           onClick={e => this.handleClick(e.target)}
           onTransitionEnd={e => this.removeTransition(e.target)}
