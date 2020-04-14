@@ -41,6 +41,8 @@ class App extends React.Component {
   }
 
   render() {
+    let redPiece = (<div className="red piece"></div>)
+    let blackPiece = (<div className="black piece"></div>)
     return (
       <div className="App">
         <Input updateSize={this.updateSize}/>
@@ -48,8 +50,8 @@ class App extends React.Component {
           return (
             <div className="row" key={index}>
               {row.map((cube, index) => {
-                if (cube === 'r') return (<div key={index} className="cube red piece"></div>);
-                if (cube === 'b') return (<div key={index} className="cube black piece"></div>);
+                if (cube === 'r') return (<div key={index} className="cube">{redPiece}</div>);
+              if (cube === 'b') return (<div key={index} className="cube">{blackPiece}</div>);
                 if (cube === 0) return (<div key={index} className="cube"></div>);
               })}
             </div>
