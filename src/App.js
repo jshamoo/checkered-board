@@ -24,6 +24,7 @@ class App extends React.Component {
     }
     this.updateSize = this.updateSize.bind(this);
     this.reset = this.reset.bind(this);
+    this.save = this.save.bind(this);
   }
 
   updateSize(n) {
@@ -164,7 +165,11 @@ class App extends React.Component {
   }
 
   save() {
-
+    /**
+     * I'd send a POST request to server
+     * save the state to a json file
+     * Change the hard-code to be fetched from the server
+     */
   }
 
   reset() {
