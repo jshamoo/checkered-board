@@ -41,8 +41,8 @@ class App extends React.Component {
   }
 
   render() {
-    let redPiece = (<div className="red piece"></div>)
-    let blackPiece = (<div className="black piece"></div>)
+    let redPiece = (<div className="red piece"></div>);
+    let blackPiece = (<div className="black piece"></div>);
     return (
       <div className="App">
         <Input updateSize={this.updateSize}/>
