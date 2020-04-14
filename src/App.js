@@ -178,11 +178,11 @@ class App extends React.Component {
                 {row.map((cube, j) => {
                   const pos = i.toString() + j.toString();
                   if (cube === 'r') return (
-                    <div key={j} className="cube">
+                    <div key={j} className="cube" data-pos={pos} >
                       <Piece color="red" position={pos} />
                     </div>);
                   if (cube === 'b') return (
-                    <div key={j} className="cube">
+                    <div key={j} className="cube" data-pos={pos} >
                       <Piece color="black" position={pos} />
                     </div>);
                   if (cube === 0) return (
